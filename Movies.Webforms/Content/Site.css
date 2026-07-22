@@ -19,6 +19,7 @@ textarea {
         padding: 0;
     }
 }
+
 /* For the Movies grid on the default page*/
 .movie-grid {
     width: 100%;
@@ -26,15 +27,15 @@ textarea {
     margin-top: 20px;
 }
 
-    .movie-grid th {
-        background-color: #eeeeee;
-        padding: 10px;
-        text-align: left;
-    }
+.movie-grid th {
+    background-color: #eeeeee;
+    padding: 10px;
+    text-align: left;
+}
 
-    .movie-grid td {
-        padding: 10px;
-    }
+.movie-grid td {
+    padding: 10px;
+}
 
 .selected-movie {
     width: 100%;
