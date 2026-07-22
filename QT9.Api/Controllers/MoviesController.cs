@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Movies.Api.Models;
 using Movies.Api.Repository;
-using System.Threading;
 
-namespace Movies.Api.Controllers
+namespace Movies.Api.ControllerBase
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -12,9 +11,7 @@ namespace Movies.Api.Controllers
         private readonly MovieRepository _repository;
         private readonly ILogger<MoviesController> _logger;
 
-        public MoviesController(
-            MovieRepository repository,
-            ILogger<MoviesController> logger)
+        public MoviesController(MovieRepository repository, ILogger<MoviesController> logger)
         {
             _repository = repository;
             _logger = logger;
@@ -27,20 +24,14 @@ namespace Movies.Api.Controllers
         {
             try
             {
-                IReadOnlyList<Movie> movies =
-                    await _repository.GetMoviesAsync();
-
+                IReadOnlyList<Movie> movies = await _repository.GetMoviesAsync();
                 return Ok(movies);
             }
             catch (Exception exception)
             {
-                _logger.LogError(
-                    exception,
-                    "An error occurred while retrieving movies.");
+                _logger.LogError(exception, "An error occurred while retrieving movies.");
 
-                return Problem(
-                    title: "Unable to retrieve movie data.",
-                    statusCode: StatusCodes.Status500InternalServerError);
+                return Problem(title: "Unable to retrieve movie data.", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
     }

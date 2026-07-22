@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Movies.WebForms._Default" Async="true" %>
+﻿<%@ Page Title="Movies" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Movies.WebForms._Default" Async="true" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -13,8 +13,7 @@
                     <asp:Label 
                         ID="ErrorLabel" 
                         runat="server"
-                        CssClass="error-message"
-                        ForeColor="Red">
+                        CssClass="error-message">
                     </asp:Label>
                     <asp:GridView 
                         ID="MovieGrid" 
@@ -29,7 +28,7 @@
                         <AlternatingRowStyle CssClass="movie-row-alt" />
 
                         <Columns>
-                            <asp:TemplateField HeaderText="Display below">
+                            <asp:TemplateField HeaderText="Select">
                                 <ItemTemplate>
                                     <asp:LinkButton
                                         ID="SelectMovieLinkButton"
@@ -52,7 +51,6 @@
 
                     </asp:GridView> 
                 </p>
-               <!--<h2>Selected Movie</h2> -->
 
             <asp:TextBox
                 ID="SelectedMovieTextBox"

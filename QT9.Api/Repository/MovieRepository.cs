@@ -1,8 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
 using Movies.Api.Models;
-using System.Collections.Generic;
-using System.Reflection.PortableExecutable;
-using System.Threading;
 
 namespace Movies.Api.Repository
 {
@@ -34,16 +31,18 @@ namespace Movies.Api.Repository
                     ,MovieTitle
                     ,MovieRating
                     ,ReleaseYear
-                FROM MoviesDB.dbo.tblMovie
+                FROM dbo.tblMovie
                 ORDER BY MovieID
                 """;
             await using var connection = new SqlConnection(_connectionString);
             await using var command = new SqlCommand(sql, connection);
             await connection.OpenAsync();
             await using var reader = await command.ExecuteReaderAsync();
-            
-            /*added for speed/eficiency and to overhead,
-             * not really usefull with this data set but would use it in a production environment.*/
+
+            /*
+             * Column ordinals are resolved once before reading the result set to avoid
+             * repeatedly looking up column positions by name.
+             */
             int movieIdOrdinal = reader.GetOrdinal("MovieID");
             int movieTitleOrdinal = reader.GetOrdinal("MovieTitle");
             int movieRatingOrdinal = reader.GetOrdinal("MovieRating");

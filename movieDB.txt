@@ -1,0 +1,35 @@
+﻿USE [master]
+GO
+/****** Object:  Database [MoviesDB]    Script Date: 04/10/2019 4:58:15 PM ******/
+CREATE DATABASE [MoviesDB]
+ GO
+
+USE [MoviesDB]
+GO
+/****** Object:  Table [dbo].[tblMovie]    Script Date: 04/10/2019 4:58:15 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tblMovie](
+	[MovieID] [int] IDENTITY(1,1) NOT NULL,
+	[MovieTitle] [nvarchar](50) NULL,
+	[MovieRating] [char](5) NULL,
+	[ReleaseYear] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+SET IDENTITY_INSERT [dbo].[tblMovie] ON 
+
+INSERT [dbo].[tblMovie] ([MovieID], [MovieTitle], [MovieRating], [ReleaseYear]) VALUES (1, N'From Dusk Til Dawn', N'R    ', 1996)
+INSERT [dbo].[tblMovie] ([MovieID], [MovieTitle], [MovieRating], [ReleaseYear]) VALUES (2, N'Neighbors', N'R    ', 2014)
+INSERT [dbo].[tblMovie] ([MovieID], [MovieTitle], [MovieRating], [ReleaseYear]) VALUES (4, N'Avengers: Infinity War', N'PG-13', 2018)
+INSERT [dbo].[tblMovie] ([MovieID], [MovieTitle], [MovieRating], [ReleaseYear]) VALUES (5, N'The Goonies', N'PG   ', 1985)
+INSERT [dbo].[tblMovie] ([MovieID], [MovieTitle], [MovieRating], [ReleaseYear]) VALUES (6, N'Get Out', N'R    ', 2017)
+INSERT [dbo].[tblMovie] ([MovieID], [MovieTitle], [MovieRating], [ReleaseYear]) VALUES (7, N'Get Him to The Greek', N'R    ', 2010)
+INSERT [dbo].[tblMovie] ([MovieID], [MovieTitle], [MovieRating], [ReleaseYear]) VALUES (8, N'Batman v Superman: Dawn of Justice', N'PG-13', 2222)
+SET IDENTITY_INSERT [dbo].[tblMovie] OFF
+ALTER TABLE [dbo].[tblMovie] ADD  CONSTRAINT [DF_tblMovie_ReleaseYear]  DEFAULT ((0)) FOR [ReleaseYear]
+GO
+USE [master]
+GO

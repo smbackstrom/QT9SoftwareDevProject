@@ -1,6 +1,6 @@
 ﻿namespace Movies.Api.Models
 {
-    public sealed class Movie
+    public class Movie
     {
         public int MovieID { get; set; }
         public string? MovieTitle { get; set; }
