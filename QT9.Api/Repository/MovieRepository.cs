@@ -34,7 +34,7 @@ namespace Movies.Api.Repository
             await connection.OpenAsync();
             await using var reader = await command.ExecuteReaderAsync();
             
-            /*added for speed/eficiency with no overhead,
+            /*added for speed/eficiency and to overhead,
              * not really usefull with this data set but would use it in a production environment.*/
             int movieIdOrdinal = reader.GetOrdinal("MovieID");
             int movieTitleOrdinal = reader.GetOrdinal("MovieTitle");

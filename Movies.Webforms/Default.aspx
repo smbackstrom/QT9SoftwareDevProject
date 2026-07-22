@@ -29,7 +29,7 @@
                         <AlternatingRowStyle CssClass="movie-row-alt" />
 
                         <Columns>
-                            <asp:TemplateField HeaderText="Action">
+                            <asp:TemplateField HeaderText="Display below">
                                 <ItemTemplate>
                                     <asp:LinkButton
                                         ID="SelectMovieLinkButton"
