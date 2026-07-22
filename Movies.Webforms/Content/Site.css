@@ -19,3 +19,45 @@ textarea {
         padding: 0;
     }
 }
+/* For the Movies grid on the default page*/
+.movie-grid {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+    .movie-grid th {
+        background-color: #eeeeee;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .movie-grid td {
+        padding: 10px;
+    }
+
+.selected-movie {
+    width: 100%;
+    min-height: 120px;
+    margin-top: 8px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.movie-row {
+    background-color: #ffffff;
+}
+
+.movie-row-alt {
+    background-color: #f5f5f5;
+}
+
+.movie-grid tr:hover {
+    background-color: #e8f4ff;
+}
+
+.error-message {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}

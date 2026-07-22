@@ -9,25 +9,58 @@
         </section>
 
         <div class="row"> 
-            <section class="col-md-4" aria-labelledby="hostingTitle">
                 <p>
-                    <asp:Label ID="ErrorLabel" runat="server"></asp:Label>
+                    <asp:Label 
+                        ID="ErrorLabel" 
+                        runat="server"
+                        CssClass="error-message"
+                        ForeColor="Red">
+                    </asp:Label>
                     <asp:GridView 
                         ID="MovieGrid" 
                         runat="server" 
-                        AutoGenerateColumns="false" 
-                        GridLines="Both" 
-                        EmptyDataText="No movies were returned.">
+                        AutoGenerateColumns="False"                         
+                        CssClass="movie-grid"
+                        GridLines="Both"
+                        EmptyDataText="No movies were returned."
+                        OnRowCommand="MovieGrid_RowCommand">
+
+                        <RowStyle CssClass="movie-row" />
+                        <AlternatingRowStyle CssClass="movie-row-alt" />
 
                         <Columns>
+                            <asp:TemplateField HeaderText="Action">
+                                <ItemTemplate>
+                                    <asp:LinkButton
+                                        ID="SelectMovieLinkButton"
+                                        runat="server"
+                                        Text="Select"
+                                        CommandName="SelectedMovie"
+                                        CommandArgument="<%# Container.DataItemIndex %>"
+                                        CausesValidation="false" />
+                                </ItemTemplate>
+                            </asp:TemplateField>  
+                            
+                            <asp:BoundField DataField="MovieID" HeaderText="Movie ID" />
 
+                            <asp:BoundField DataField="MovieTitle" HeaderText="Title" />
+
+                            <asp:BoundField DataField="MovieRating" HeaderText="Rating" />
+
+                            <asp:BoundField DataField="ReleaseYear" HeaderText="Release Year" />
                         </Columns>
-
 
                     </asp:GridView> 
                 </p>
-               
-            </section>
+               <!--<h2>Selected Movie</h2> -->
+
+            <asp:TextBox
+                ID="SelectedMovieTextBox"
+                runat="server"
+                TextMode="MultiLine"
+                Rows="5"
+                ReadOnly="true"
+                CssClass="selected-movie" />
         </div>
     </main>
 
