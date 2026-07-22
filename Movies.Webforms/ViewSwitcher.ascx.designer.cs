@@ -7,9 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Movies.Webforms {
-    
-    
-    public partial class ViewSwitcher {
+namespace Movies.WebForms
+{
+
+
+    public partial class ViewSwitcher
+    {
     }
 }

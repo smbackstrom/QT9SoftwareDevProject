@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Movies.Webforms
+namespace Movies.WebForms
 {
 
 

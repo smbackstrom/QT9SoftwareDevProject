@@ -11,6 +11,14 @@ namespace Movies.Api.Repository
         private readonly string _connectionString;
         public MovieRepository(IConfiguration configuration)
         {
+            /* 
+             * For this take-home assignment, the connection string is stored in appsettings.json
+             * to simplify setup and execution.
+             *
+             * In a production Azure environment, sensitive configuration such as connection
+             * strings should be stored securely in Azure Key Vault (or another approved
+             * secrets management solution) rather than in source-controlled configuration files.
+             */
             _connectionString =
                 configuration.GetConnectionString("MoviesDatabase")
                 ?? throw new InvalidOperationException(

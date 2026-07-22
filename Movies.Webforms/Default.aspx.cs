@@ -1,4 +1,4 @@
-﻿using Movies.Webforms.Models;
+﻿using Movies.WebForms.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Movies.Webforms
+namespace Movies.WebForms
 {
     public partial class _Default : System.Web.UI.Page
     {

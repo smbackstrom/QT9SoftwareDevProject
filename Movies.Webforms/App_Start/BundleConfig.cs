@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Optimization;
 using System.Web.UI;
 
-namespace Movies.Webforms
+namespace Movies.WebForms
 {
     public class BundleConfig
     {

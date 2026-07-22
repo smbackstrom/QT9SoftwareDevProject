@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36915.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Api", "QT9.Api\Movies.Api.csproj", "{334417F8-DDE6-4E63-8454-D177C6F76BB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.Webforms", "Movies.Webforms\Movies.Webforms.csproj", "{76E5A345-04A6-4829-BF3B-92C63089E1DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.WebForms", "Movies.Webforms\Movies.WebForms.csproj", "{76E5A345-04A6-4829-BF3B-92C63089E1DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -21,8 +21,7 @@ namespace Movies.Api.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(
-        typeof(IReadOnlyList<Movie>),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IReadOnlyList<Movie>),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IReadOnlyList<Movie>>> GetMovies()
         {
