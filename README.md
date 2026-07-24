@@ -21,10 +21,10 @@ Setup
 1. Run the supplied SQL script, in the movieDB.txt file, to create the `MoviesDB` database.
 2. Open `QT9SoftwareDevProject.sln` in Visual Studio.
 3. Restore NuGet packages if prompted (or select **Restore NuGet Packages** from the solution).
-4. Update the SQL Server connection string in Movies.Api/appsettings.json if your SQL Server instance is not SBCOMPUTER.
+4. Update the SQL Server connection string in Movies.Api/appsettings.json to your SQL Server instance.
 5. Configure Multiple Startup Projects:
-   - Movies.Api – Start
-   - Movies.WebForms – Start
+   - Movies.Api â€“ Start
+   - Movies.WebForms â€“ Start
 6. Start the solution.
 7. The API will be available at:
    - https://localhost:7165/api/movies
