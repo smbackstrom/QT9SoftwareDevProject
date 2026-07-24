@@ -51,7 +51,7 @@
 
                     </asp:GridView> 
                 </p>
-
+            <h6>Selected Movie</h6>
             <asp:TextBox
                 ID="SelectedMovieTextBox"
                 runat="server"

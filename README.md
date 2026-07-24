@@ -18,12 +18,18 @@ Technologies Used
 
 Setup
 --------
-1. Run the supplied SQL script to create the MoviesDB database.
-2. Update `QT9.Api/appsettings.json` if your SQL Server instance is not `SBCOMPUTER`.
-3. Configure both `Movies.Api` and `Movies.WebForms` as startup projects.
-4. Start the API using its HTTP profile.
-5. Confirm that the API is available at:`http://localhost:5267/api/movies`
-6. Run the Web Forms application.
+1. Run the supplied SQL script, in the movieDB.txt file, to create the `MoviesDB` database.
+2. Open `QT9SoftwareDevProject.sln` in Visual Studio.
+3. Restore NuGet packages if prompted (or select **Restore NuGet Packages** from the solution).
+4. Update the SQL Server connection string in Movies.Api/appsettings.json if your SQL Server instance is not SBCOMPUTER.
+5. Configure Multiple Startup Projects:
+   - Movies.Api – Start
+   - Movies.WebForms – Start
+6. Start the solution.
+7. The API will be available at:
+   - https://localhost:7165/api/movies
+   - http://localhost:5267/api/movies
+8. Verify that the Web Forms application loads the movie list successfully.
  
 Solution Structure
 ------------------
