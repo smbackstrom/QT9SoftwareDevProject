@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Movies.Api.DTO;
 using Movies.Api.Models;
 
 namespace Movies.Api.Repository
@@ -22,18 +23,32 @@ namespace Movies.Api.Repository
                     "The QT9 Movies Database connection string is not configured.");
         }
 
-        public async Task<IReadOnlyList<Movie>> GetMoviesAsync()
+        public async Task<IReadOnlyList<Movie>> GetMoviesAsync(bool includeInactive)
         {
             var movies = new List<Movie>();
-            
-            const string sql = """
+            string sql = string.Empty;
+            if(includeInactive)
+            {
+            sql = @"
                 SELECT MovieID
                     ,MovieTitle
                     ,MovieRating
                     ,ReleaseYear
                 FROM dbo.tblMovie
-                ORDER BY MovieID
-                """;
+                ORDER BY MovieID";
+            }
+            else
+            {
+            sql = @"
+                SELECT MovieID
+                    ,MovieTitle
+                    ,MovieRating
+                    ,ReleaseYear
+                FROM dbo.tblMovie
+                WHERE IsActive = 1
+                ORDER BY MovieID";
+            }
+
             await using var connection = new SqlConnection(_connectionString);
             await using var command = new SqlCommand(sql, connection);
             await connection.OpenAsync();
@@ -59,6 +74,97 @@ namespace Movies.Api.Repository
                 });                
             }
             return movies;
+        }
+
+        public async Task<Movie> GetMovieAsync(int id)
+        {
+            var movie = new Movie();
+            const string sql = @"
+                SELECT MovieID
+                    ,MovieTitle
+                    ,MovieRating
+                    ,ReleaseYear
+                FROM dbo.tblMovie
+                WHERE IsActive = 1
+                AND MovieID = @MovieID;";
+
+            await using var connection = new SqlConnection(_connectionString);
+            await using var command = new SqlCommand(sql, connection);
+
+            command.Parameters.AddWithValue("@MovieID", id);
+
+            await connection.OpenAsync();
+
+            await using var reader = await command.ExecuteReaderAsync();
+            if (!await reader.ReadAsync())
+            {
+                return null;
+            }
+            return new Movie
+            {
+                MovieID = reader.GetInt32(reader.GetOrdinal("MovieID")),
+                MovieTitle = reader.IsDBNull(reader.GetOrdinal("MovieTitle")) ? null : reader.GetString(reader.GetOrdinal("MovieTitle")),
+                MovieRating = reader.IsDBNull(reader.GetOrdinal("MovieRating")) ? null : reader.GetString(reader.GetOrdinal("MovieRating")),
+                ReleaseYear = reader.IsDBNull(reader.GetOrdinal("ReleaseYear")) ? null : reader.GetInt32(reader.GetOrdinal("ReleaseYear"))
+            };
+
+        }
+        public async Task<MovieResponse> CreateMovieAsync(CreateMovieRequest request)
+        {
+            using SqlConnection connection =
+                new SqlConnection(_connectionString);
+
+            const string sql = @"
+            INSERT INTO dbo.tblMovie
+                (MovieTitle, MovieRating, ReleaseYear)
+            OUTPUT INSERTED.MovieID
+            VALUES
+                (@MovieTitle, @MovieRating, @ReleaseYear);";
+
+            using SqlCommand command = new(sql, connection);
+
+            command.Parameters.AddWithValue("@MovieTitle", request.MovieTitle);
+            command.Parameters.AddWithValue("@MovieRating", request.MovieRating);
+            command.Parameters.AddWithValue("@ReleaseYear", request.ReleaseYear);
+
+            await connection.OpenAsync();
+
+            int newId = (int)await command.ExecuteScalarAsync();
+
+            return new MovieResponse
+            {
+                MovieID = newId,
+                MovieTitle = request.MovieTitle,
+                MovieRating = request.MovieRating,
+                ReleaseYear = request.ReleaseYear
+            };
+        }
+
+        public async Task<bool> UpdateMovieAsync(int id, UpdateMovieRequest request)
+        {
+            using SqlConnection connection =
+                new SqlConnection(_connectionString);
+
+            const string sql = @"
+            UPDATE dbo.tblMovie
+            SET
+                MovieTitle = @MovieTitle,
+                MovieRating = @MovieRating,
+                ReleaseYear = @ReleaseYear
+            WHERE MovieID = @MovieID";
+
+            using SqlCommand command = new(sql, connection);
+
+            command.Parameters.AddWithValue("@MovieID", id);
+            command.Parameters.AddWithValue("@MovieTitle", request.MovieTitle);
+            command.Parameters.AddWithValue("@MovieRating", request.MovieRating);
+            command.Parameters.AddWithValue("@ReleaseYear", request.ReleaseYear);
+
+            await connection.OpenAsync();
+
+            int rows = await command.ExecuteNonQueryAsync();
+
+            return rows > 0;
         }
     }
 }
