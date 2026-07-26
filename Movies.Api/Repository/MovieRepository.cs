@@ -112,7 +112,7 @@ namespace Movies.Api.Repository
             };
 
         }
-        public async Task<MovieResponse> CreateMovieAsync(CreateMovieRequest request)
+        public async Task<MovieResponse> PostMovieAsync(CreateMovieRequest request)
         {
             using SqlConnection connection =
                 new SqlConnection(_connectionString);
@@ -143,7 +143,7 @@ namespace Movies.Api.Repository
             };
         }
 
-        public async Task<bool> UpdateMovieAsync(int id, UpdateMovieRequest request)
+        public async Task<bool> PutMovieAsync(int id, UpdateMovieRequest request)
         {
             using SqlConnection connection =
                 new SqlConnection(_connectionString);

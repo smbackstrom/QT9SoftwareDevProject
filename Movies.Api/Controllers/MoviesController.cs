@@ -82,14 +82,14 @@ namespace Movies.Api.ControllerBase
         [ProducesResponseType(typeof(Movie), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<MovieResponse>> CreateMovie(CreateMovieRequest request)
+        public async Task<ActionResult<MovieResponse>> PostMovie(CreateMovieRequest request)
         {
             if(request == null)
             {
                 return BadRequest();
             }
 
-            MovieResponse movie = await _repository.CreateMovieAsync(request);
+            MovieResponse movie = await _repository.PostMovieAsync(request);
 
             return CreatedAtAction( nameof(GetMovie), new { id = movie.MovieID }, movie);
         }
@@ -106,7 +106,7 @@ namespace Movies.Api.ControllerBase
                 return BadRequest();
             }
 
-            bool updated = await _repository.UpdateMovieAsync(id, request);
+            bool updated = await _repository.PutMovieAsync(id, request);
 
             if (!updated)
             {
