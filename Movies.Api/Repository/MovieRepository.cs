@@ -26,28 +26,25 @@ namespace Movies.Api.Repository
         public async Task<IReadOnlyList<Movie>> GetMoviesAsync(bool includeInactive)
         {
             var movies = new List<Movie>();
-            string sql = string.Empty;
-            if(includeInactive)
-            {
-            sql = @"
-                SELECT MovieID
-                    ,MovieTitle
-                    ,MovieRating
-                    ,ReleaseYear
-                FROM dbo.tblMovie
-                ORDER BY MovieID";
-            }
-            else
-            {
-            sql = @"
-                SELECT MovieID
-                    ,MovieTitle
-                    ,MovieRating
-                    ,ReleaseYear
-                FROM dbo.tblMovie
-                WHERE IsActive = 1
-                ORDER BY MovieID";
-            }
+
+            const string getAllSql = @"
+            SELECT MovieID,
+                   MovieTitle,
+                   MovieRating,
+                   ReleaseYear
+            FROM dbo.tblMovie
+            ORDER BY MovieID";
+
+            const string getActiveSql = @"
+            SELECT MovieID,
+                   MovieTitle,
+                   MovieRating,
+                   ReleaseYear
+            FROM dbo.tblMovie
+            WHERE IsActive = 1
+            ORDER BY MovieID";
+
+            string sql = includeInactive ? getAllSql : getActiveSql;
 
             await using var connection = new SqlConnection(_connectionString);
             await using var command = new SqlCommand(sql, connection);
