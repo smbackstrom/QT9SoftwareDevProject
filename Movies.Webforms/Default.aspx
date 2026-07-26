@@ -15,6 +15,22 @@
                         runat="server"
                         CssClass="error-message">
                     </asp:Label>
+
+                   <div class="movie-toolbar">
+                    <span class="toggle-text">Show Inactive</span>
+
+                    <label class="switch">
+                        <input
+                            id="chkShowInactive"
+                            runat="server"
+                            type="checkbox"
+                            onchange="this.form.submit();"
+                            onserverchange="chkShowInactive_ServerChange" />
+
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
                     <asp:GridView 
                         ID="MovieGrid" 
                         runat="server" 
@@ -22,23 +38,12 @@
                         CssClass="movie-grid"
                         GridLines="Both"
                         EmptyDataText="No movies were returned."
-                        OnRowCommand="MovieGrid_RowCommand">
+                        OnRowCommand="MovieGrid_RowCommandAsync">
 
                         <RowStyle CssClass="movie-row" />
                         <AlternatingRowStyle CssClass="movie-row-alt" />
 
                         <Columns>
-                            <asp:TemplateField HeaderText="Select">
-                                <ItemTemplate>
-                                    <asp:LinkButton
-                                        ID="SelectMovieLinkButton"
-                                        runat="server"
-                                        Text="Select"
-                                        CommandName="SelectedMovie"
-                                        CommandArgument="<%# Container.DataItemIndex %>"
-                                        CausesValidation="false" />
-                                </ItemTemplate>
-                            </asp:TemplateField>  
                             
                             <asp:BoundField DataField="MovieID" HeaderText="Movie ID" />
 
@@ -47,18 +52,43 @@
                             <asp:BoundField DataField="MovieRating" HeaderText="Rating" />
 
                             <asp:BoundField DataField="ReleaseYear" HeaderText="Release Year" />
+
+                            <asp:TemplateField HeaderText="Edit">
+                                <ItemTemplate>
+                                    <asp:LinkButton
+                                        ID="EditButton"
+                                        runat="server"
+                                         Text="<i class='bi bi-pencil'></i>"
+                                        ToolTip="Edit Movie"
+                                        CommandName="EditMovie"
+                                        CommandArgument='<%# Eval("MovieID") %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Delete">
+                                <ItemTemplate>
+                                    <asp:LinkButton
+                                        ID="DeleteButton"
+                                        runat="server"
+                                        Text="<i class='bi bi-trash2'></i>"
+                                        ToolTip="Delete Movie"
+                                        CommandName="DeleteMovie"
+                                        CommandArgument='<%# Eval("MovieID") %>'
+                                        OnClientClick="return confirm('Are you sure you want to delete this movie?');" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
                         </Columns>
 
                     </asp:GridView> 
                 </p>
-            <h6>Selected Movie</h6>
+            <%--<h6>Selected Movie</h6>
             <asp:TextBox
                 ID="SelectedMovieTextBox"
                 runat="server"
                 TextMode="MultiLine"
                 Rows="5"
                 ReadOnly="true"
-                CssClass="selected-movie" />
+                CssClass="selected-movie" />--%>
         </div>
     </main>
 

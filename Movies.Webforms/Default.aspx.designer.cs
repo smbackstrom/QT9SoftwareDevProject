@@ -24,6 +24,15 @@ namespace Movies.WebForms
         protected global::System.Web.UI.WebControls.Label ErrorLabel;
 
         /// <summary>
+        /// chkShowInactive control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox chkShowInactive;
+
+        /// <summary>
         /// MovieGrid control.
         /// </summary>
         /// <remarks>
@@ -31,14 +40,5 @@ namespace Movies.WebForms
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView MovieGrid;
-
-        /// <summary>
-        /// SelectedMovieTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox SelectedMovieTextBox;
     }
 }

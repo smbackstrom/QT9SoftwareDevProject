@@ -42,3 +42,62 @@
     font-weight: bold;
     color: #c62828;
 }
+
+.movie-toolbar {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+    margin: 0;
+}
+
+    .switch input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: #b7b7b7;
+    border-radius: 28px;
+    transition: 0.25s;
+}
+
+    .slider::before {
+        content: "";
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        border-radius: 50%;
+        transition: 0.25s;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+    }
+
+.switch input:checked + .slider {
+    background-color: #198754;
+}
+
+    .switch input:checked + .slider::before {
+        transform: translateX(24px);
+    }
+
+.toggle-text {
+    font-weight: 600;
+    user-select: none;
+}

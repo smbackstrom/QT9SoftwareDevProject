@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.UI;
@@ -35,6 +36,12 @@ namespace Movies.WebForms
                  */
                 string apiUrl = ConfigurationManager.AppSettings["MoviesApiUrl"];
 
+                // If the user wants inactive movies too, append the query string.
+                if (chkShowInactive.Checked)
+                {
+                    apiUrl += "?includeInactive=true";
+                }
+
                 if (string.IsNullOrWhiteSpace(apiUrl))
                 {
                     throw new ConfigurationErrorsException("MoviesApiUrl is not configured.");
@@ -63,40 +70,83 @@ namespace Movies.WebForms
             }
         }
 
-        protected void MovieGrid_RowCommand(
-        object sender,
-        GridViewCommandEventArgs e)
+        protected async void MovieGrid_RowCommandAsync(object sender, GridViewCommandEventArgs e)
+        {
+            int movieId = Convert.ToInt32(e.CommandArgument);
+
+            switch (e.CommandName)
+            {
+                case "EditMovie":
+                    //await LoadMovieAsync(movieId);
+                    break;
+
+                case "DeleteMovie":
+                    bool deleted = await DeleteMovieAsync(movieId);
+
+                    if (deleted)
+                    {
+                        await LoadMoviesAsync();
+                    }
+
+                    break;
+            }
+        }
+
+        protected async void chkShowInactive_ServerChange(object sender, EventArgs e)
+        {
+            await LoadMoviesAsync();
+        }
+
+        private async Task<bool> DeleteMovieAsync(int movieId)
         {
             ErrorLabel.Text = string.Empty;
-            if (e.CommandName != "SelectedMovie")
+
+            try
             {
-                return;
+                string apiUrl =
+                    ConfigurationManager.AppSettings["MoviesApiUrl"];
+
+                if (string.IsNullOrWhiteSpace(apiUrl))
+                {
+                    throw new ConfigurationErrorsException(
+                        "MoviesApiUrl is not configured.");
+                }
+
+                string deleteUrl =
+                    $"{apiUrl.TrimEnd('/')}/{movieId}";
+
+                using (HttpResponseMessage response =
+                       await HttpClient.DeleteAsync(deleteUrl))
+                {
+                    if (response.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        ErrorLabel.Text =
+                            "The selected movie was not found or is already inactive.";
+
+                        return false;
+                    }
+
+                    response.EnsureSuccessStatusCode();
+
+                    return true;
+                }
             }
-
-            int rowIndex;
-
-            if (!int.TryParse(e.CommandArgument?.ToString(),out rowIndex))
+            catch (HttpRequestException ex)
             {
-                ErrorLabel.Text = "The selected row was invalid.";
-                return;
+                ErrorLabel.Text =
+                    "The movies API could not be reached. " +
+                    Server.HtmlEncode(ex.Message);
+
+                return false;
             }
-
-            List<Movie> movies =
-                Session[MoviesSessionKey] as List<Movie>;
-
-            if (movies == null || rowIndex < 0 || rowIndex >= movies.Count)
+            catch (Exception ex)
             {
-                ErrorLabel.Text = "The selected movie could not be found.";
-                return;
+                ErrorLabel.Text =
+                    "The movie could not be deleted. " +
+                    Server.HtmlEncode(ex.Message);
+
+                return false;
             }
-
-            Movie selectedMovie = movies[rowIndex];
-
-            SelectedMovieTextBox.Text =
-            $"Movie ID: {selectedMovie.MovieID}{Environment.NewLine}" +
-            $"Title: {selectedMovie.MovieTitle}{Environment.NewLine}" +
-            $"Rating: {selectedMovie.MovieRating}{Environment.NewLine}" +
-            $"Release Year: {selectedMovie.ReleaseYear}";
         }
     }
 }
