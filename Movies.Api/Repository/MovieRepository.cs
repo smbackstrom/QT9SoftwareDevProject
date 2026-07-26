@@ -166,5 +166,25 @@ namespace Movies.Api.Repository
 
             return rows > 0;
         }
+
+        public async Task<bool> DeleteMovieAsync(int id)
+        {
+            const string sql = @"
+            UPDATE dbo.tblMovie
+            SET IsActive = 0
+            WHERE MovieID = @MovieID
+            AND IsActive = 1";
+
+            await using var connection = new SqlConnection(_connectionString);
+            await using var command = new SqlCommand(sql, connection);
+
+            command.Parameters.AddWithValue("@MovieID", id);
+
+            await connection.OpenAsync();
+
+            int rowsAffected = await command.ExecuteNonQueryAsync();
+
+            return rowsAffected > 0;
+        }
     }
 }
