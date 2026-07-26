@@ -31,7 +31,8 @@ namespace Movies.Api.Repository
             SELECT MovieID,
                    MovieTitle,
                    MovieRating,
-                   ReleaseYear
+                   ReleaseYear,
+                   IsActive
             FROM dbo.tblMovie
             ORDER BY MovieID";
 
@@ -39,7 +40,8 @@ namespace Movies.Api.Repository
             SELECT MovieID,
                    MovieTitle,
                    MovieRating,
-                   ReleaseYear
+                   ReleaseYear,
+                   IsActive
             FROM dbo.tblMovie
             WHERE IsActive = 1
             ORDER BY MovieID";
@@ -59,6 +61,7 @@ namespace Movies.Api.Repository
             int movieTitleOrdinal = reader.GetOrdinal("MovieTitle");
             int movieRatingOrdinal = reader.GetOrdinal("MovieRating");
             int releaseYearOrdinal = reader.GetOrdinal("ReleaseYear");
+            int IsActiveOrdinal = reader.GetOrdinal("IsActive");
 
             while (await reader.ReadAsync())
             {
@@ -67,7 +70,8 @@ namespace Movies.Api.Repository
                     MovieID = reader.GetInt32(movieIdOrdinal)
                     , MovieTitle = reader.IsDBNull(movieTitleOrdinal) ? null : reader.GetString(movieTitleOrdinal)
                     , MovieRating = reader.IsDBNull(movieRatingOrdinal) ? null : reader.GetString(movieRatingOrdinal)
-                    , ReleaseYear = reader.IsDBNull(releaseYearOrdinal) ? null : reader.GetInt32(releaseYearOrdinal)
+                    , ReleaseYear = reader.GetInt32(releaseYearOrdinal)
+                    , IsActive = reader.GetBoolean(IsActiveOrdinal)
                 });                
             }
             return movies;
@@ -81,6 +85,7 @@ namespace Movies.Api.Repository
                     ,MovieTitle
                     ,MovieRating
                     ,ReleaseYear
+                    ,IsActive
                 FROM dbo.tblMovie
                 WHERE IsActive = 1
                 AND MovieID = @MovieID;";
@@ -102,7 +107,8 @@ namespace Movies.Api.Repository
                 MovieID = reader.GetInt32(reader.GetOrdinal("MovieID")),
                 MovieTitle = reader.IsDBNull(reader.GetOrdinal("MovieTitle")) ? null : reader.GetString(reader.GetOrdinal("MovieTitle")),
                 MovieRating = reader.IsDBNull(reader.GetOrdinal("MovieRating")) ? null : reader.GetString(reader.GetOrdinal("MovieRating")),
-                ReleaseYear = reader.IsDBNull(reader.GetOrdinal("ReleaseYear")) ? null : reader.GetInt32(reader.GetOrdinal("ReleaseYear"))
+                ReleaseYear = reader.GetInt32(reader.GetOrdinal("ReleaseYear")),
+                IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive"))
             };
 
         }

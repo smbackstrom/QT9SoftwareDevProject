@@ -1,6 +1,6 @@
-﻿namespace Movies.Api.Models
+﻿namespace Movies.Api.DTO
 {
-    public class Movie
+    public class MovieAdminResponse
     {
         public int MovieID { get; set; }
         public string? MovieTitle { get; set; }

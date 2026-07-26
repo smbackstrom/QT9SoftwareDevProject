@@ -27,8 +27,29 @@ namespace Movies.Api.ControllerBase
         {
             try
             {
-                IReadOnlyList<Movie> movies = await _repository.GetMoviesAsync(includeInactive);
-                return Ok(movies);
+                var movies = await _repository.GetMoviesAsync(includeInactive);
+                if(includeInactive)
+                {
+                    var response = movies.Select(m => new MovieAdminResponse
+                    {
+                        MovieID = m.MovieID,
+                        MovieTitle = m.MovieTitle,
+                        MovieRating = m.MovieRating,
+                        ReleaseYear = m.ReleaseYear,
+                        IsActive = m.IsActive
+                    });
+                    return Ok(response);
+                }
+
+                var activeResponse = movies.Select(m => new MovieResponse
+                {
+                    MovieID = m.MovieID,
+                    MovieTitle = m.MovieTitle,
+                    MovieRating = m.MovieRating,
+                    ReleaseYear = m.ReleaseYear
+                });
+
+                return Ok(activeResponse);
             }
             catch (Exception exception)
             {
