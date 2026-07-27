@@ -16,20 +16,106 @@
                         CssClass="error-message">
                     </asp:Label>
 
-                   <div class="movie-toolbar">
-                    <span class="toggle-text">Show Inactive</span>
+                   <div class="movie-toolbar, d-flex justify-content-between align-items-center mb-3">
 
-                    <label class="switch">
-                        <input
-                            id="chkShowInactive"
+                        <asp:LinkButton
+                            ID="AddMovieButton"
                             runat="server"
-                            type="checkbox"
-                            onchange="this.form.submit();"
-                            onserverchange="chkShowInactive_ServerChange" />
+                            CssClass="btn btn-success"
+                            OnClick="AddMovieButton_Click">
 
-                        <span class="slider"></span>
-                    </label>
+                            <i class="bi bi-plus-circle"></i>
+                            Movie
+                        </asp:LinkButton>
+
+                        <asp:HiddenField ID="SelectedMovieId" runat="server" />
+                       
+
+                       <div class="d-flex align-items-center">
+                            <span class="toggle-text"> Show Inactive </span>
+                            <label class="switch">
+                                <input
+                                    id="chkShowInactive"
+                                    runat="server"
+                                    type="checkbox"
+                                    onchange="this.form.submit();"
+                                    onserverchange="chkShowInactive_ServerChange" />
+
+                                <span class="slider"></span>
+                            </label>
+                        </div>
                 </div>
+
+                    <asp:Panel ID="MovieEditorPanel" runat="server" CssClass="card mb-3" Visible="false">
+
+                        <div class="card-header">
+                            <asp:Label
+                                ID="EditorTitleLabel"
+                                runat="server"
+                                Text="Add Movie" />
+                        </div>
+
+                        <div class="card-body">
+
+                            <asp:HiddenField
+                                ID="HiddenField1"
+                                runat="server" />
+
+                        <div class="form-group mb-3">
+                            <label>Movie Title</label>
+                            <asp:TextBox
+                                ID="MovieTitleTextBox"
+                                runat="server"
+                                CssClass="form-control" />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label>Rating</label>
+                            <asp:DropDownList
+                                ID="MovieRatingDropDown"
+                                runat="server"
+                                CssClass="form-select">
+                                <asp:ListItem>G</asp:ListItem>
+                                <asp:ListItem>PG</asp:ListItem>
+                                <asp:ListItem>PG-13</asp:ListItem>
+                                <asp:ListItem>R</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label>Release Year</label>
+                            <asp:TextBox
+                                ID="ReleaseYearTextBox"
+                                runat="server"
+                                CssClass="form-control" />
+                        </div>
+
+                        <div class="form-check mb-3">
+                             <label>Active</label>
+                            <asp:CheckBox
+                                ID="IsActiveCheckBox"
+                                runat="server"
+                                CssClass="form-check-input" />
+                        </div>
+
+                        <asp:Button
+                            ID="SaveMovieButton"
+                            runat="server"
+                            Text="Add Movie"
+                            CssClass="btn btn-primary"
+                            onClick ="SaveButton_Click"/>
+
+                        <asp:Button
+                            ID="CancelEditButton"
+                            runat="server"
+                            Text="Cancel"
+                            Visible="false"
+                            CssClass="btn btn-secondary ms-2" 
+                            onClick ="CancelMovieForm_Click"/>
+
+                        </div>
+
+                    </asp:Panel>
 
                     <asp:GridView 
                         ID="MovieGrid" 
@@ -61,7 +147,8 @@
                                          Text="<i class='bi bi-pencil'></i>"
                                         ToolTip="Edit Movie"
                                         CommandName="EditMovie"
-                                        CommandArgument='<%# Eval("MovieID") %>' />
+                                        CommandArgument='<%# Eval("MovieID") %>'
+                                        CssClass="movie-action"/>
                                 </ItemTemplate>
                             </asp:TemplateField>
 
@@ -81,14 +168,7 @@
 
                     </asp:GridView> 
                 </p>
-            <%--<h6>Selected Movie</h6>
-            <asp:TextBox
-                ID="SelectedMovieTextBox"
-                runat="server"
-                TextMode="MultiLine"
-                Rows="5"
-                ReadOnly="true"
-                CssClass="selected-movie" />--%>
+            
         </div>
     </main>
 

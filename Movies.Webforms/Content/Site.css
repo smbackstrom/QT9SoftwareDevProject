@@ -100,4 +100,5 @@
 .toggle-text {
     font-weight: 600;
     user-select: none;
+    padding-right: 20px;
 }

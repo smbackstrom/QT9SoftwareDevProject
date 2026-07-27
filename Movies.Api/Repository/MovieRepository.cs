@@ -87,8 +87,7 @@ namespace Movies.Api.Repository
                     ,ReleaseYear
                     ,IsActive
                 FROM dbo.tblMovie
-                WHERE IsActive = 1
-                AND MovieID = @MovieID;";
+                WHERE MovieID = @MovieID;";
 
             await using var connection = new SqlConnection(_connectionString);
             await using var command = new SqlCommand(sql, connection);
@@ -153,7 +152,8 @@ namespace Movies.Api.Repository
             SET
                 MovieTitle = @MovieTitle,
                 MovieRating = @MovieRating,
-                ReleaseYear = @ReleaseYear
+                ReleaseYear = @ReleaseYear,
+                IsActive = @IsActive
             WHERE MovieID = @MovieID";
 
             using SqlCommand command = new(sql, connection);
@@ -162,6 +162,7 @@ namespace Movies.Api.Repository
             command.Parameters.AddWithValue("@MovieTitle", request.MovieTitle);
             command.Parameters.AddWithValue("@MovieRating", request.MovieRating);
             command.Parameters.AddWithValue("@ReleaseYear", request.ReleaseYear);
+            command.Parameters.AddWithValue("@IsActive", request.IsActive);
 
             await connection.OpenAsync();
 

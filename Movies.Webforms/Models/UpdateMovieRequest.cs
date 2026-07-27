@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Movies.WebForms.Models
+namespace Movies.Webforms.Models
 {
-    public class Movie
-    {       
-        public int MovieID { get; set; }
+    public class UpdateMovieRequest
+    {
         public string MovieTitle { get; set; }
         public string MovieRating { get; set; }
-        public int? ReleaseYear { get; set; }
+        public int ReleaseYear { get; set; }
         public bool IsActive { get; set; }
     }
 }
